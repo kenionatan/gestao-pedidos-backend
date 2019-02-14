@@ -10,6 +10,10 @@ django = "==2.1.7"
 python-decouple = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+dj-database-url = "*"
+dj-static = "*"
+gunicorn = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
