@@ -23,11 +23,11 @@ router.register(r'client', viewsets.ClientViewSet)
 router.register(r'product', viewsets.ProductViewSet)
 router.register(r'user', viewsets.UserViewSet)
 router.register(r'order', viewsets.OrderViewSet)
-router.register(r'order_item', viewsets.OrderItemViewSet)
+router.register(r'order-item', viewsets.OrderItemViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('<int:id>/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

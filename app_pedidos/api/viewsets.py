@@ -1,6 +1,9 @@
 from rest_framework import viewsets
 from app_pedidos.models.client import Client
 from app_pedidos.models.user import User
+from app_pedidos.models.product import Product
+from app_pedidos.models.order import Order
+from app_pedidos.models.order_item import OrderItem
 from .serializers import (ClientSerializer, UserSerializer,
                           ProductSerializer, OrderSerializer, OrderItemSerializer)
 
@@ -16,15 +19,15 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 
 class OrderItemViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
