@@ -24,14 +24,14 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'product_title', 'product_price', 'product_multiple')
 
 
-class OrderSerializer(serializers.HyperlinkedModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ('id', 'client', 'quantityItem', 'price',
+        fields = ('id', 'client', 'quantityItem', 'grand_total',
                   'profitability', 'create_date', 'update_date')
 
 
-class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
+class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ('id', 'order', 'product', 'price', 'quantityProduct')
