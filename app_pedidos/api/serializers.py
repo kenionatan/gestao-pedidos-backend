@@ -24,14 +24,22 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'product_title', 'product_price', 'product_multiple')
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ('id', 'client', 'quantityItem', 'grand_total',
-                  'profitability', 'create_date', 'update_date')
-
-
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ('id', 'order', 'product', 'price', 'quantityProduct')
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+    class Meta:
+        model = Order
+        fields = ('id', 'client', 'quantityItem', 'grand_total',
+                  'items', 'profitability', 'create_date', 'update_date')
+
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        item = Order.objects.create(**validated_data)
+        for item_data in items_data:
+            OrderItem.objects.create(order=item, **item_data)
+        return item
