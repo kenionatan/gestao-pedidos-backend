@@ -25,6 +25,8 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+
     class Meta:
         model = OrderItem
         fields = ('id', 'order', 'product', 'price', 'quantityProduct')
@@ -32,6 +34,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+    client = ClientSerializer(read_only=True)
+
     class Meta:
         model = Order
         fields = ('id', 'client', 'quantityItem', 'grand_total',
