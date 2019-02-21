@@ -25,7 +25,6 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)
 
     class Meta:
         model = OrderItem
@@ -34,7 +33,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
-    client = ClientSerializer(read_only=True)
 
     class Meta:
         model = Order
@@ -47,3 +45,19 @@ class OrderSerializer(serializers.ModelSerializer):
         for item_data in items_data:
             OrderItem.objects.create(order=item, **item_data)
         return item
+
+    def update(self, instance, validated_data):
+        instance.client = validated_data.get('client', instance.client)
+        instance.quantityItem = validated_data.get('quantityItem', instance.quantityItem)
+        instance.grand_total = validated_data.get('grand_total', instance.grand_total)
+        instance.profitability = validated_data.get('profitability', instance.profitability)
+        items_data = validated_data.pop('items')
+        product_items_dict = dict((i.id, i) for i in instance.items.all())
+        for item_data in items_data:
+            if 'id' not in item_data:
+                OrderItem.objects.create(order=instance, **item_data)
+        if len(product_items_dict) > 0:
+            for item in product_items_dict.values():
+                item.delete()
+        instance.save()
+        return instance
