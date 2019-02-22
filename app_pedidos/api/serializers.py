@@ -28,7 +28,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ('id', 'order', 'product', 'price', 'quantityProduct')
+        fields = ('id', 'order', 'product', 'price',
+                  'quantityProduct', 'profitability')
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -37,7 +38,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'client', 'quantityItem', 'grand_total',
-                  'items', 'profitability', 'create_date', 'update_date')
+                  'items', 'create_date', 'update_date')
 
     def create(self, validated_data):
         items_data = validated_data.pop('items')
@@ -50,7 +51,7 @@ class OrderSerializer(serializers.ModelSerializer):
         instance.client = validated_data.get('client', instance.client)
         instance.quantityItem = validated_data.get('quantityItem', instance.quantityItem)
         instance.grand_total = validated_data.get('grand_total', instance.grand_total)
-        instance.profitability = validated_data.get('profitability', instance.profitability)
+        #instance.profitability = validated_data.get('profitability', instance.profitability)
         items_data = validated_data.pop('items')
         product_items_dict = dict((i.id, i) for i in instance.items.all())
         for item_data in items_data:
