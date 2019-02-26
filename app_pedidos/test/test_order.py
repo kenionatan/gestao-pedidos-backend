@@ -1,5 +1,6 @@
 from django.test import TestCase
 from app_pedidos.models import Product, Order, Client
+from rest_framework.test import APIClient
 
 
 class ProductTestCase(TestCase):
@@ -19,3 +20,11 @@ class ProductTestCase(TestCase):
         assert Product.objects.all().count() == 2
         assert Client.objects.all().count() == 2
         assert Order.objects.all().count() == 2
+
+    def test_api(self):
+        client = APIClient()
+        response = client.post('http://127.0.0.1:8000/product/', {
+            'product_title': 'new idea',
+            'product_price': 10,
+            'product_multiple': 2}, format='json')
+        print(response.json())
