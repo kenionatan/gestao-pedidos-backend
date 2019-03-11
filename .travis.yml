@@ -1,0 +1,15 @@
+language: python
+python:
+    - "3.6"
+
+env:
+    - DJANGO_VERSION=2.0
+    - DJANGO_VERSION=2.1
+
+install:
+- pip install pipenv
+- pipenv install
+script:
+- python manage.py test
+after_success:
+- pipenv run coverage report
