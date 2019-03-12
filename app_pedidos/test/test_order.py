@@ -24,7 +24,7 @@ class ProductTestCase(TestCase):
     def test_api(self):
         client = APIClient()
         response = client.post('http://127.0.0.1:8000/product/', {
-            'product_title': 'new idea',
+            'product_title': 'product name',
             'product_price': 10,
             'product_multiple': 2}, format='json')
         self.assertEqual(201, response.status_code)
