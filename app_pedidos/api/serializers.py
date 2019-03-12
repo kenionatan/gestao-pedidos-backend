@@ -29,7 +29,15 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ('id', 'order', 'product', 'price',
-                  'quantityProduct', 'profitability')
+                  'quantity', 'profitability')
+
+    def validate(self, data):
+        quantity = data.get('quantity')
+        product = data.get('product')
+        if product.product_multiple is not None:
+            if int(quantity) % int(product.product_multiple) != 0:
+                raise serializers.ValidationError("Quantity is not multiple")
+        return data
 
 
 class OrderSerializer(serializers.ModelSerializer):
