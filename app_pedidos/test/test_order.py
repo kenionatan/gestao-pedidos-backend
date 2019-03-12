@@ -27,4 +27,4 @@ class ProductTestCase(TestCase):
             'product_title': 'new idea',
             'product_price': 10,
             'product_multiple': 2}, format='json')
-        print(response.json())
+        self.assertEqual(201, response.status_code)

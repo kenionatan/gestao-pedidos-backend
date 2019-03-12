@@ -32,6 +32,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
                   'quantity', 'profitability')
 
     def validate(self, data):
+        """
+        Validate product multiple
+        """
         quantity = data.get('quantity')
         product = data.get('product')
         if product.product_multiple is not None:
