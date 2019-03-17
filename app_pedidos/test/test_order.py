@@ -49,3 +49,24 @@ class ProductTestCase(TestCase):
         resp = response.json()
         print(resp)
         assert response.status_code == 201
+
+    def test_validate_multiple(self):
+        client = RequestsClient()
+        response = client.post('http://127.0.0.1:8000/product/', json={
+            'product_title': 'product name',
+            'product_price': 222,
+            'product_multiple': 10
+        })
+        resp = response.json()
+        id_product = resp['id']
+
+        response = client.post('http://127.0.0.1:8000/order-item/', json={
+            'order': 1,
+            'product': id_product,
+            'price': 222,
+            'quantity': 5,
+            'profitability': 'Rentabilidade Boa'
+        })
+        resp = response.json()
+        print(resp)
+        assert response.status_code == 400
