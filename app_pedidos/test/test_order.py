@@ -29,17 +29,21 @@ class ProductTestCase(TestCase):
             'product_multiple': 2}, format='json')
         self.assertEqual(201, response.status_code)
 
-    def test_validate_api(self):
-        #Product.objects.create(id=4, product_title="Millenium ​Falcon",
-                               #product_price=440000.00, product_multiple=2)
-        #client1 = Client.objects.create(id=1, client_name="Darth Vader")
-        #Order.objects.create(id=1, client=client1)
-        client = APIClient()
+    def test_validate_profitability(self):
+        client = RequestsClient()
+        response = client.post('http://127.0.0.1:8000/product/', json={
+            'product_title': 'product name',
+            'product_price': 550000.00,
+            'product_multiple': 2
+        })
+        resp = response.json()
+        id_product = resp['id']
+
         response = client.post('http://127.0.0.1:8000/order-item/', json={
             'order': 1,
-            'product': 1,
+            'product': id_product,
             'price': 550000.00,
-            'quantity': 1,
+            'quantity': 2,
             'profitability': 'Rentabilidade Boa'
         })
         resp = response.json()
