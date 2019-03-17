@@ -50,11 +50,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
         """
         if price > product.product_price and profitability != "Rentabilidade Alta":
             raise serializers.ValidationError("Profitability have to be High")
-        elif float(product.product_price) <= price >= float(product.product_price)*0.9 \
-                and profitability != "Rentabilidade Boa":
-            raise serializers.ValidationError("Profitability have to be Good")
-        elif price < float(product.product_price)*0.9:
-            raise serializers.ValidationError("Profitability can not be Bad")
+        elif price <= float(product.product_price):
+            if price >= float(product.product_price)*0.9 and profitability != "Rentabilidade Boa":
+                raise serializers.ValidationError("Profitability have to be Good")
+            elif price < float(product.product_price)*0.9:
+                raise serializers.ValidationError("Profitability can not be Bad")
 
         return data
 
