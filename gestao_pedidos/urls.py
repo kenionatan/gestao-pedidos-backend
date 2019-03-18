@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from rest_framework import routers
 from app_pedidos.api import viewsets
+from rest_framework_swagger.views import get_swagger_view
 
 router = routers.DefaultRouter()
 router.register(r'client', viewsets.ClientViewSet)
@@ -25,9 +27,11 @@ router.register(r'user', viewsets.UserViewSet)
 router.register(r'order', viewsets.OrderViewSet)
 router.register(r'order-item', viewsets.OrderItemViewSet)
 
+schema_view = get_swagger_view(title='Rest API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^docs', schema_view)
 ]

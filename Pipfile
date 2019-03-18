@@ -15,6 +15,8 @@ dj-static = "*"
 gunicorn = "*"
 psycopg2 = "*"
 requests = "*"
+drfdocs = "*"
+django-rest-swagger = "*"
 
 [requires]
 python_version = "3.7"

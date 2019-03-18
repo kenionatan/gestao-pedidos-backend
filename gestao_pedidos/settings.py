@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'app_pedidos',
     'rest_framework',
     'corsheaders',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
